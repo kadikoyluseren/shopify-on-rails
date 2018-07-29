@@ -12,12 +12,22 @@
   </head>
 
   <body>
+    <%= link_to "Sign out", destroy_user_session_path, method: :delete if user_signed_in?%>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+
     <center>
     <%= link_to 'Products', root_path %>
     |
     <%= link_to 'New Product', new_product_path %>
     |
     <%= link_to 'Seed Products', seed_path, method: :post %>
+
+    <% flash.each do |name,msg| %>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
+    
     </center>
     <%= yield %>
   </body>

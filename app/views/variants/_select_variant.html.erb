@@ -1,4 +1,10 @@
 <%= form_tag(gift_product_path(product), method: :post, remote: true) do %>
+
+  	<%= label_tag :email %>
+  	<%= text_field_tag :email %>
+  	<br>
+
   <%= select_tag :variant_id, options_for_select(product.variants.collect { |variant| [variant.name, variant.id] }) %>
-  <%= submit_tag('Send Gift') %>
+	<%= submit_tag('Send Gift') %>
+
 <% end %>

@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :find_variant, only: :send_gift
+  before_action :authenticate_user!
 
   def new
     @product = Product.new
@@ -7,10 +8,11 @@ class ProductsController < ApplicationController
   end
 
   def send_gift
-    @variant.send_gift
+    @variant.send_gift(params[:email])
   end
 
   def show
+
     @product = Product.find_by(name: params[:name])
   end
 
@@ -23,6 +25,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to products_path
     else
+      flash.now[:error]=@product.errors.full_messages
       render :new
     end
   end
@@ -30,7 +33,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :price, :description, variants_attributes: [:id, :stock, :name])
+    params.require(:product).permit(:name, :price, :description, :image, variants_attributes: [:id, :stock, :name])
   end
 
   def find_variant

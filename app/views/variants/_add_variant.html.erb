@@ -1,0 +1,14 @@
+<h2>Add a variant:</h2>
+<%= form_with(model: [ @product, @product.variants.build ], local: true) do |form| %>
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :stock %><br>
+    <%= form.text_area :stock %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

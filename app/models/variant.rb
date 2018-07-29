@@ -1,8 +1,12 @@
 class Variant < ApplicationRecord
+
   belongs_to :product, optional: true
 
-  def send_gift
-    decrement!(:stock)
+  validates :stock, numericality: {greater_than_or_equal_to: 0}
+  validates :name, presence: true
+  
+  def send_gift(email)
+      SendGiftMailer.send_gift(email).deliver_later if decrement!(:stock)
   end
 
   def stock_information
@@ -24,3 +28,4 @@ class Variant < ApplicationRecord
     stock < 4
   end
 end
+
